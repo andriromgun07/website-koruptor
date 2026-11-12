@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Korupsi 101</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: berkas perkara terbuka — satu kolom teks yang tenang, garis tipis sebagai pemisah, kuning stabilo hanya untuk penekanan, merah hanya untuk label pasal & cap. */
+:root{
+  --paper:#f4f2ed;
+  --sheet:#fbfaf7;
+  --ink:#1b1b1a;
+  --muted:#66645d;
+  --line:#dcd8ce;
+  --marker:#ffd60a;
+  --stamp:#c8102e;
+  --on-marker:#1b1b1a;
+  --good:#1f7a3a;
+  --font-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --radius:8px;
+  /* type scale */
+  --fs-xs:.75rem; --fs-sm:.9rem; --fs-base:1.0625rem; --fs-lg:1.2rem;
+  --fs-h3:1.4rem; --fs-h2:clamp(2.1rem,4.6vw,3.1rem); --fs-h1:clamp(4.2rem,12vw,8.75rem);
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#141413;--sheet:#1c1c1a;--ink:#efede6;--muted:#a3a198;--line:#33322e;
+    --stamp:#ff5a68;--good:#5fd38a;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#141413;--sheet:#1c1c1a;--ink:#efede6;--muted:#a3a198;--line:#33322e;
+  --stamp:#ff5a68;--good:#5fd38a;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-body);font-size:var(--fs-base);line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--marker);outline-offset:3px}
+h1,h2,h3{font-family:var(--font-display);font-weight:900;text-transform:uppercase;line-height:.98;letter-spacing:.01em;text-wrap:balance;margin:0}
+h2{font-size:var(--fs-h2)}
+h3{font-size:var(--fs-h3);letter-spacing:.015em}
+p{margin:0}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.mono{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase}
+.hl{background:linear-gradient(transparent 14%,var(--marker) 14%,var(--marker) 86%,transparent 86%);color:var(--on-marker);padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.btn{display:inline-flex;align-items:center;gap:.5em;font-family:var(--font-body);font-weight:600;font-size:var(--fs-sm);padding:.72em 1.15em;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);border-radius:999px;text-decoration:none;cursor:pointer;transition:background .15s ease,color .15s ease}
+.btn:hover{background:var(--marker);color:var(--on-marker);border-color:var(--marker)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--marker);color:var(--on-marker);border-color:var(--marker)}
+.btn[disabled]{opacity:.35;cursor:default;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.arrow{font-family:var(--font-mono)}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:var(--radius)}
+
+/* NAV */
+nav.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:20px;min-height:60px;flex-wrap:wrap}
+.brand{font-family:var(--font-display);font-weight:900;font-size:1.4rem;text-transform:uppercase;text-decoration:none;letter-spacing:.03em}
+.brand span{color:var(--stamp)}
+nav.top ul{list-style:none;display:flex;gap:4px 22px;margin:0 0 0 auto;padding:0;flex-wrap:wrap}
+nav.top a.nl{text-decoration:none;font-weight:500;font-size:var(--fs-sm);color:var(--muted);padding:4px 0}
+nav.top a.nl:hover{color:var(--ink)}
+.tag-new{font-family:var(--font-mono);font-size:.6rem;font-weight:600;background:var(--marker);color:var(--on-marker);padding:1px 5px;border-radius:3px;margin-left:5px;vertical-align:2px}
+
+/* HERO */
+header.hero{padding:72px 0 64px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:56px;align-items:center}
+.file-meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);margin-bottom:20px}
+.hero h1{font-size:var(--fs-h1);line-height:.84;letter-spacing:-.005em}
+.hero h1 .num{display:inline-block;position:relative;color:var(--on-marker);padding:0 .08em;isolation:isolate}
+.hero h1 .num::before{content:"";position:absolute;inset:.1em -.02em .04em;background:var(--marker);z-index:-1;transform-origin:left;animation:swipe .8s .2s cubic-bezier(.6,.1,.2,1) both}
+@keyframes swipe{from{transform:scaleX(.04)}to{transform:scaleX(1)}}
+.hero .lede{font-size:var(--fs-lg);max-width:36ch;margin-top:24px;color:var(--muted)}
+.hero .lede b{color:var(--ink);font-weight:600}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.stat-card{padding:26px;position:relative}
+.stamp{display:inline-block;border:2px solid var(--stamp);color:var(--stamp);font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:1rem;line-height:1;padding:6px 10px;transform:rotate(-6deg);letter-spacing:.05em;border-radius:4px}
+.stat-card .stamp{position:absolute;top:-14px;right:18px;background:var(--paper)}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0 18px}
+.stat-big{font-family:var(--font-display);font-weight:900;font-size:3.6rem;line-height:.9;font-variant-numeric:tabular-nums}
+.stat-big sub{font-size:1.05rem;vertical-align:baseline;color:var(--muted);font-weight:700}
+.stat-row .mono{color:var(--muted);margin-top:6px}
+.meter{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.meter i{display:block;height:100%;width:34%;background:var(--stamp);border-radius:99px}
+.meter-scale{display:flex;justify-content:space-between;color:var(--muted);margin-top:8px;font-size:.68rem}
+.src{color:var(--muted);font-size:.82rem;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);line-height:1.5}
+
+/* SECTIONS */
+section{padding:88px 0;border-top:1px solid var(--line)}
+section.tint{background:var(--sheet)}
+section.tint .card{background:var(--paper)}
+.sec-head{max-width:680px;margin-bottom:40px}
+.sec-no{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.sec-no::before{content:"";display:inline-block;width:22px;height:2px;background:var(--stamp);vertical-align:middle;margin-right:10px}
+.sec-head p{color:var(--muted);margin-top:14px;max-width:58ch}
+
+/* LEVEL CARDS */
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.level{padding:26px;display:flex;flex-direction:column;gap:12px;text-decoration:none;transition:border-color .15s ease,transform .15s ease;min-height:260px}
+.level:hover{border-color:var(--ink);transform:translateY(-3px)}
+.level .tab{align-self:flex-start;color:var(--muted);font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.08em;text-transform:uppercase}
+.level.alt{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.level.alt .tab{color:var(--marker)}
+.level.alt p{color:color-mix(in srgb,var(--paper) 78%,transparent)}
+.level p{color:var(--muted);font-size:.97rem}
+.level .go{margin-top:auto;font-weight:600;font-size:var(--fs-sm);display:flex;justify-content:space-between;border-top:1px solid currentColor;border-color:color-mix(in srgb,currentColor 18%,transparent);padding-top:14px}
+.glyph{width:40px;height:40px;margin-bottom:4px}
+
+/* TYPES */
+.types{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.type{padding:22px;display:flex;flex-direction:column;gap:10px}
+.type .head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.type .idx{font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--muted)}
+.type .pasal{font-family:var(--font-mono);font-size:.7rem;color:var(--stamp);letter-spacing:.02em;text-align:right}
+.type h3{font-size:1.3rem}
+.type p{font-size:.93rem;color:var(--muted)}
+.type details{margin-top:auto;font-size:.9rem}
+.type summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px}
+.type summary::-webkit-details-marker{display:none}
+.type summary::after{content:"+";font-family:var(--font-mono)}
+.type details[open] summary::after{content:"–"}
+.type details p{margin-top:8px}
+.type.sum,section.tint .type.sum{background:var(--marker);border-color:var(--marker);color:var(--on-marker);justify-content:center}
+.type.sum p{color:var(--on-marker)}
+.type.sum .big{font-family:var(--font-display);font-weight:900;font-size:3.4rem;line-height:.9}
+.note{margin-top:22px;font-size:.86rem;color:var(--muted);max-width:78ch;border-left:3px solid var(--marker);padding-left:14px}
+
+/* STEPS */
+.steps{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:84px 1fr;gap:20px;padding:28px 0;border-bottom:1px solid var(--line)}
+.step-n{font-family:var(--font-display);font-weight:900;font-size:2.6rem;line-height:.9;color:var(--muted);font-variant-numeric:tabular-nums}
+.step h3{font-size:var(--fs-h3);margin-bottom:8px}
+.step p{color:var(--muted);max-width:62ch}
+.step .btn{margin-top:16px}
+.channels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.ch{padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.ch b{font-family:var(--font-mono);font-size:.9rem;font-weight:600;word-break:break-word}
+.ch span{font-size:.82rem;color:var(--muted)}
+.copy{align-self:flex-start;font-family:var(--font-mono);font-size:.68rem;background:none;border:1px solid var(--line);color:var(--muted);padding:3px 9px;border-radius:999px;cursor:pointer;margin-top:8px}
+.copy:hover{border-color:var(--ink);color:var(--ink)}
+
+/* INSTITUTIONS */
+.insts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.inst{padding:22px;display:flex;flex-direction:column;gap:10px}
+.inst .ab{align-self:flex-start;font-family:var(--font-mono);font-size:.72rem;font-weight:600;letter-spacing:.08em;background:var(--ink);color:var(--paper);padding:3px 8px;border-radius:4px}
+.inst h3{font-size:1.3rem}
+.inst p{font-size:.93rem;color:var(--muted)}
+
+/* SIMULATION */
+.sim{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;align-items:stretch}
+.scene{background:var(--ink);color:var(--paper);border-radius:var(--radius);padding:28px;display:flex;flex-direction:column;gap:18px}
+.scene .mono{color:var(--marker)}
+.scene .q{font-size:var(--fs-lg);line-height:1.55}
+.choices{display:grid;gap:10px}
+.choice{text-align:left;font:inherit;font-size:.95rem;padding:12px 16px;border:1px solid color-mix(in srgb,var(--paper) 30%,transparent);background:transparent;color:var(--paper);border-radius:var(--radius);cursor:pointer;transition:border-color .15s,background .15s}
+.choice:hover:not([disabled]){border-color:var(--marker)}
+.choice[disabled]{cursor:default;opacity:.45}
+.choice.picked{opacity:1;background:var(--marker);color:var(--on-marker);border-color:var(--marker)}
+.verdict{padding:28px;display:flex;flex-direction:column;gap:12px}
+.verdict .res{font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:2.1rem;line-height:.95}
+.res.good{color:var(--good)}
+.res.bad{color:var(--stamp)}
+.sim-nav{display:flex;gap:10px;margin-top:auto;padding-top:10px;flex-wrap:wrap}
+
+/* QUIZ */
+.quiz{max-width:720px;padding:30px}
+.quiz-top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);margin-bottom:12px}
+.progress{height:4px;background:var(--line);border-radius:4px;overflow:hidden;margin-bottom:24px}
+.progress i{display:block;height:100%;background:var(--marker);width:0;transition:width .3s}
+.quiz h3{font-family:var(--font-body);text-transform:none;font-weight:600;font-size:1.25rem;line-height:1.35;letter-spacing:0;margin-bottom:18px}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;font:inherit;padding:12px 16px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:var(--radius);cursor:pointer;transition:border-color .15s}
+.opt:hover:not([disabled]){border-color:var(--ink)}
+.opt.right{background:var(--good);border-color:var(--good);color:#fff}
+.opt.wrong{background:var(--stamp);border-color:var(--stamp);color:#fff}
+.explain{margin-top:16px;font-size:.95rem;color:var(--muted);min-height:1.5em}
+.quiz-foot{display:flex;justify-content:flex-end;margin-top:20px}
+
+/* CTA */
+.cta{background:var(--ink);color:var(--paper);border-top:none}
+.cta .mono{color:var(--marker);margin-bottom:18px;display:block}
+.cta h2{font-size:clamp(2.6rem,7vw,5rem);line-height:.92}
+.cta .hl{color:var(--on-marker)}
+.countdown{display:grid;grid-template-columns:repeat(4,minmax(0,130px));gap:12px;margin:36px 0 24px}
+.cd{border:1px solid color-mix(in srgb,var(--paper) 22%,transparent);border-radius:var(--radius);padding:14px 16px}
+.cd b{display:block;font-family:var(--font-display);font-weight:900;font-size:2.8rem;line-height:.9;font-variant-numeric:tabular-nums}
+.cd span{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:color-mix(in srgb,var(--paper) 60%,transparent)}
+.cta p{max-width:56ch;color:color-mix(in srgb,var(--paper) 78%,transparent)}
+
+/* EXPLORE */
+.explore{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ex{padding:26px;text-decoration:none;display:flex;flex-direction:column;gap:10px;min-height:220px;position:relative;transition:border-color .15s,transform .15s}
+.ex:hover{border-color:var(--ink);transform:translateY(-3px)}
+.ex .mono{color:var(--muted)}
+.ex p{color:var(--muted);font-size:.95rem}
+.ex .soon{position:absolute;top:22px;right:20px;transform:rotate(-4deg);font-size:.8rem;padding:3px 8px}
+.ex .go{margin-top:auto;font-weight:600;font-size:var(--fs-sm)}
+
+/* FOOTER */
+footer{padding:64px 0 48px;border-top:1px solid var(--line)}
+.foot{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px}
+footer h4{font-family:var(--font-mono);font-size:var(--fs-xs);letter-spacing:.1em;text-transform:uppercase;margin:0 0 12px;color:var(--muted);font-weight:400}
+footer ul{list-style:none;padding:0;margin:0;display:grid;gap:8px;font-size:var(--fs-sm)}
+footer ul a{text-decoration:none}
+footer ul a:hover{text-decoration:underline}
+footer p{font-size:var(--fs-sm);color:var(--muted);max-width:46ch}
+.big-foot{font-family:var(--font-display);font-weight:900;text-transform:uppercase;font-size:clamp(2.6rem,9vw,6.5rem);line-height:.85;margin-top:56px;color:var(--line);letter-spacing:0;user-select:none}
+.copyright{color:var(--muted);margin-top:18px}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:999px;font-size:.88rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+
+@media (max-width:960px){
+  .types{grid-template-columns:repeat(2,1fr)}
+  .channels{grid-template-columns:repeat(2,1fr)}
+  .insts{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  header.hero{padding:48px 0}
+  section{padding:64px 0}
+  .hero-grid,.sim,.foot{grid-template-columns:1fr;gap:36px}
+  .levels,.explore,.insts{grid-template-columns:1fr}
+  .step{grid-template-columns:48px 1fr;gap:14px}
+  .step-n{font-size:2rem}
+  .countdown{grid-template-columns:repeat(4,1fr);gap:8px}
+  .cd{padding:10px}
+  .cd b{font-size:2rem}
+  nav.top ul{margin-left:0;padding-bottom:10px;gap:4px 16px}
+}
+@media (max-width:460px){
+  .types,.channels{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *{animation:none!important;transition:none!important}
+}
+
+/* ---------- MOTION ---------- */
+:root{--ease:cubic-bezier(.22,1,.36,1);--ease-io:cubic-bezier(.65,0,.35,1);--dur:.45s}
+html{scroll-behavior:auto}
+.btn,.level,.ex,.opt,.choice,.copy,nav.top a.nl,.type summary{transition-timing-function:var(--ease)!important;transition-duration:.3s!important}
+nav.top{transition:box-shadow .4s var(--ease),background-color .4s var(--ease)}
+nav.top.scrolled{box-shadow:0 6px 24px -12px rgba(0,0,0,.18)}
+nav.top a.nl{position:relative}
+nav.top a.nl::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:2px;background:var(--marker);transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+nav.top a.nl:hover::after,nav.top a.nl.active::after{transform:scaleX(1)}
+nav.top a.nl.active{color:var(--ink)}
+.level,.ex{transition-property:border-color,transform,box-shadow}
+.level:hover,.ex:hover{box-shadow:0 14px 30px -18px rgba(0,0,0,.25)}
+.progress i{transition:width .6s var(--ease)}
+.type details .body{overflow:hidden}
+/* reveal on scroll: hanya untuk elemen di bawah layar awal, tetap terbaca saat diam */
+.pre{opacity:.2;transform:translateY(22px)}
+.in{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .8s var(--ease);transition-delay:var(--d,0s)}
+@media (prefers-reduced-motion: reduce){
+  .pre{opacity:1;transform:none}
+}
+
+/* ---------- KABAR TERKINI ---------- */
+.news-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:36px}
+.news-head .sec-head{margin-bottom:0}
+.updated{color:var(--muted);display:flex;align-items:center;gap:8px}
+.updated::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--stamp);box-shadow:0 0 0 0 var(--stamp);animation:ping 2s var(--ease) infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--stamp) 55%,transparent)}80%,100%{box-shadow:0 0 0 8px transparent}}
+.news{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.news-item{padding:24px;display:flex;flex-direction:column;gap:12px;transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
+.news-item:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(0,0,0,.25)}
+.news-item.lead,section.tint .news-item.lead{grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:12px 40px;padding:32px;background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.news-item.lead .n-body{display:flex;flex-direction:column;gap:12px}
+.news-item.lead .n-fig{align-self:center;border-left:1px solid color-mix(in srgb,var(--paper) 20%,transparent);padding-left:32px}
+.news-item.lead .n-fig b{font-size:clamp(3.2rem,6vw,5rem);color:var(--marker);white-space:nowrap}
+.news-item.lead p,.news-item.lead .n-fig span,.news-item.lead .n-src{color:color-mix(in srgb,var(--paper) 72%,transparent)}
+.news-item.lead h3{font-size:clamp(1.8rem,3.4vw,2.5rem)}
+.n-meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.chip{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor;line-height:1.4}
+.chip.st-sidik{color:var(--muted)}
+.chip.st-limpah{color:#b26b00}
+.chip.st-sidang{color:var(--stamp)}
+.news-item.lead .chip{color:var(--marker)}
+.chip.org{border-color:transparent;background:var(--ink);color:var(--paper)}
+.news-item.lead .chip.org{background:var(--paper);color:var(--ink)}
+.n-date{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);margin-left:auto}
+.news-item h3{font-size:1.45rem;line-height:1.02}
+.news-item p{color:var(--muted);font-size:.95rem}
+.n-fig{display:flex;flex-direction:column;gap:2px}
+.n-fig b{font-family:var(--font-display);font-weight:900;font-size:2.6rem;line-height:.9;font-variant-numeric:tabular-nums}
+.n-fig span{font-size:.82rem;color:var(--muted)}
+.n-src{margin-top:auto;padding-top:12px;border-top:1px solid color-mix(in srgb,currentColor 14%,transparent);font-size:.82rem;color:var(--muted);display:flex;gap:6px 14px;flex-wrap:wrap}
+.n-src a{text-decoration:none;border-bottom:1px solid color-mix(in srgb,currentColor 35%,transparent)}
+.n-src a:hover{border-color:currentColor}
+.disclaim{margin-top:20px;font-size:.84rem;color:var(--muted);max-width:80ch;border-left:3px solid var(--stamp);padding-left:14px}
+@media (max-width:760px){
+  .news{grid-template-columns:1fr}
+  .news-item.lead{grid-template-columns:1fr;padding:24px}
+  .news-item.lead .n-fig{border-left:none;padding-left:0;border-top:1px solid color-mix(in srgb,var(--paper) 20%,transparent);padding-top:16px}
+}
+
+/* ---------- KARHUTLA: KATA PEJABAT ---------- */
+:root{--haze-1:#e8dcc6;--haze-2:#d9b98a;--haze-3:#b86a3c;--haze-ink:#3b2a1a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--haze-1:#2a2219;--haze-2:#5a4026;--haze-3:#a4552b;--haze-ink:#f3e3cc}}
+:root[data-theme="dark"]{--haze-1:#2a2219;--haze-2:#5a4026;--haze-3:#a4552b;--haze-ink:#f3e3cc}
+section.haze-sec{background:linear-gradient(180deg,var(--haze-1) 0%,var(--paper) 70%)}
+.quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.q-card{overflow:hidden;display:flex;flex-direction:column;transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease)}
+.q-card:hover{border-color:var(--ink);transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(0,0,0,.25)}
+.q-visual{position:relative;height:150px;overflow:hidden;background:
+  radial-gradient(120% 90% at 15% 110%,var(--haze-3) 0%,transparent 55%),
+  radial-gradient(80% 70% at 85% 0%,var(--haze-2) 0%,transparent 70%),
+  linear-gradient(160deg,var(--haze-1),var(--haze-2));}
+.q-visual::before,.q-visual::after{content:"";position:absolute;inset:-30%;background:radial-gradient(closest-side,rgba(255,255,255,.35),transparent 70%);filter:blur(10px);animation:drift 14s ease-in-out infinite alternate}
+.q-visual::after{inset:-20% -40% -40% 10%;opacity:.6;animation-duration:19s;animation-direction:alternate-reverse}
+@keyframes drift{from{transform:translate(-6%,2%)}to{transform:translate(8%,-4%)}}
+.q-visual .prov{position:absolute;left:20px;bottom:6px;font-family:var(--font-display);font-weight:900;font-size:4.2rem;line-height:.8;color:var(--haze-ink);opacity:.85;letter-spacing:.01em;z-index:1}
+.q-visual .tagd{position:absolute;top:14px;left:20px;z-index:1;color:var(--haze-ink)}
+.q-visual .photo-link{position:absolute;top:12px;right:14px;z-index:1;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--haze-ink);background:color-mix(in srgb,var(--paper) 70%,transparent);padding:4px 9px;border-radius:999px;backdrop-filter:blur(4px)}
+.q-visual .photo-link:hover{background:var(--paper)}
+.q-body{padding:22px 24px 24px;display:flex;flex-direction:column;gap:12px;flex:1}
+.q-who b{display:block;font-weight:600}
+.q-who span{font-size:.85rem;color:var(--muted)}
+.q-said{position:relative;padding-left:22px;font-size:1.12rem;line-height:1.45;font-weight:500}
+.q-said::before{content:"“";position:absolute;left:-4px;top:-14px;font-family:var(--font-display);font-size:3.4rem;color:var(--stamp);line-height:1}
+.q-said.para{font-weight:400;font-style:italic;border-left:3px solid var(--line);padding-left:16px;margin-left:4px}
+.q-said.para::before{content:none}
+.q-said small{display:block;font-size:.72rem;font-family:var(--font-mono);color:var(--muted);letter-spacing:.04em;margin-top:6px;font-weight:400}
+.q-ctx{font-size:.93rem;color:var(--muted)}
+.q-ctx b{color:var(--ink);font-weight:600}
+.q-src{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);font-size:.82rem;color:var(--muted);display:flex;gap:6px 14px;flex-wrap:wrap}
+.q-src a{text-decoration:none;border-bottom:1px solid color-mix(in srgb,currentColor 35%,transparent)}
+.q-src a:hover{border-color:currentColor}
+@media (max-width:760px){.quotes{grid-template-columns:1fr}.q-visual .prov{font-size:3.2rem}}
+@media (prefers-reduced-motion: reduce){.q-visual::before,.q-visual::after{animation:none}}
+</style>
+</head>
+<body>
+
+<nav class="top" aria-label="Utama">
+  <div class="wrap">
+    <a class="brand" href="#top">WebSite <span>Koruptor</span></a>
+    <ul>
+      <li><a class="nl" href="#top">Korupsi 101<span class="tag-new">BARU</span></a></li>
+      <li><a class="nl" href="#terkini">Kabar Terkini</a></li>
+      <li><a class="nl" href="#karhutla">Karhutla</a></li>
+      <li><a class="nl" href="#jenis">Jenis Korupsi</a></li>
+      <li><a class="nl" href="#lapor">Cara Lapor</a></li>
+      <li><a class="nl" href="#lembaga">Lembaga</a></li>
+      <li><a class="nl" href="#simulasi">Simulasi</a></li>
+      <li><a class="nl" href="#quiz">Quiz</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="file-meta mono"><span>Berkas No. 101/EDU/2026</span><span>Sifat: Terbuka untuk publik</span></div>
+      <h1>Korupsi<br><span class="num">101</span></h1>
+      <p class="lede">Kursus kilat buat paham korupsi: <b>apa saja bentuknya</b>, <b>siapa yang menindak</b>, dan <b>gimana cara melapor</b> dengan aman.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#mulai">Mulai belajar <span class="arrow">→</span></a>
+        <a class="btn ghost" href="#terkini">Lihat kabar terkini</a>
+      </div>
+    </div>
+    <aside>
+      <div class="stat-card card">
+        <span class="stamp">Rapor merah</span>
+        <div class="mono" style="color:var(--muted)">Indeks Persepsi Korupsi · 2025</div>
+        <div class="stat-row">
+          <div><div class="stat-big">34<sub>/100</sub></div><div class="mono">Skor</div></div>
+          <div><div class="stat-big">109<sub>/180</sub></div><div class="mono">Peringkat dunia</div></div>
+        </div>
+        <div class="meter" role="img" aria-label="Skor 34 dari 100"><i></i></div>
+        <div class="meter-scale mono"><span>0 · sangat korup</span><span>100 · sangat bersih</span></div>
+        <p class="src">Turun 3 poin dari skor 37 dan peringkat 99 pada 2024. Sumber: Transparency International, rilis 10 Februari 2026.</p>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<section id="terkini" class="tint">
+  <div class="wrap">
+    <div class="news-head">
+      <div class="sec-head">
+        <div class="sec-no">Kabar terkini</div>
+        <h2>5 perkara korupsi yang sedang disorot</h2>
+        <p>Kasus besar yang sedang ditangani KPK, Kejaksaan Agung, dan Polri. Status hukum dicatat per tanggal pembaruan.</p>
+      </div>
+      <div class="updated mono">Diperbarui 12 Nov 2026</div>
+    </div>
+
+    <div class="news">
+      <article class="news-item card lead">
+        <div class="n-body">
+          <div class="n-meta"><span class="chip org">Kejagung</span><span class="chip st-limpah">Segera disidang</span></div>
+          <h3>Korupsi program Makan Bergizi Gratis: eks Kepala BGN dan lima tersangka lain segera diadili</h3>
+          <p>Kejagung menduga ada mark-up pengadaan dan penunjukan yayasan mitra yang tidak memenuhi syarat dalam program MBG 2025–2026. Berkas Dadan Hindayana dan rekan-rekannya sudah dinyatakan lengkap dan diserahkan ke Kejari Jakarta Pusat untuk disidangkan di Pengadilan Tipikor.</p>
+          <div class="n-src"><span>12 Nov 2026</span><a href="https://investortrust.id/national/117798/eks-kepala-bgn-dadan-hindayana-cs-segera-diadili-atas-korupsi-mbg-kerugian-negara-tembus-rp-10-triliun" target="_blank" rel="noopener">Investortrust ↗</a><a href="https://news.okezone.com/read/2026/11/12/337/3253756/kejagung-didorong-usut-tuntas-dugaan-korupsi-dadan-cs" target="_blank" rel="noopener">Okezone ↗</a></div>
+        </div>
+        <div class="n-fig"><b>±Rp10 T</b><span>Taksiran kerugian negara menurut hitungan BPKP, disampaikan Kejagung</span></div>
+      </article>
+
+      <article class="news-item card">
+        <div class="n-meta"><span class="chip org">KPK</span><span class="chip st-sidik">Penyidikan</span><span class="n-date">11 Nov 2026</span></div>
+        <h3>Suap pembukaan blokir HGB Summarecon di Bogor</h3>
+        <div class="n-fig"><b>Rp106,3 M</b><span>Uang yang disita saat OTT, disebut terbesar dalam sejarah OTT KPK</span></div>
+        <p>Dari OTT 14 September, KPK menetapkan delapan tersangka, di antaranya seorang Dirjen di Kementerian ATR/BPN dan pimpinan PT Summarecon Agung. KPK masih mendalami keterlibatan korporasi.</p>
+        <div class="n-src"><a href="https://news.detik.com/berita/d-8668246/kpk-geledah-kantor-summarecon" target="_blank" rel="noopener">detikNews ↗</a><a href="https://kumparan.com/news/hasil-ott-kpk-di-kasus-mafia-tanah-bpn-28BuQB9OPdv" target="_blank" rel="noopener">kumparan ↗</a></div>
+      </article>
+
+      <article class="news-item card">
+        <div class="n-meta"><span class="chip org">Pengadilan Tipikor</span><span class="chip st-sidang">Persidangan</span><span class="n-date">Nov 2026</span></div>
+        <h3>Eks Jampidsus Febrie Adriansyah diadili atas pemerasan dan pencucian uang</h3>
+        <div class="n-fig"><b>Rp55 M</b><span>Dugaan pemerasan terhadap saksi perkara Jiwasraya, menurut dakwaan jaksa</span></div>
+        <p>Selain pemerasan, jaksa mendakwa TPPU bernilai ratusan miliar rupiah. Eksepsinya ditolak hakim pada 26 Oktober, dan sidang berlanjut ke pemeriksaan saksi.</p>
+        <div class="n-src"><a href="https://katadata.co.id/foto/6ac655b609b0d/foto-mantan-jampidsus-febrie-hingga-don-ritto-didakwa-lakukan-tppu-rp-346-m" target="_blank" rel="noopener">Katadata ↗</a><a href="https://afu.id/hukum-kriminal/eksepsi-febrie-adriansyah-ditolak-hakim-ini-alasannya" target="_blank" rel="noopener">Afu.id ↗</a></div>
+      </article>
+
+      <article class="news-item card">
+        <div class="n-meta"><span class="chip org">Polri</span><span class="chip st-sidik">Penyidikan</span><span class="n-date">12 Nov 2026</span></div>
+        <h3>Pembiayaan LPEI: Polri sita 44 aset, enam orang tersangka</h3>
+        <div class="n-fig"><b>Rp286 M</b><span>Nilai 44 aset tanah dan bangunan yang disita Kortas Tipidkor</span></div>
+        <p>Kasus pembiayaan LPEI kepada dua perusahaan periode 2012–2016. Penyidik menduga dokumen dan jaminan pencairan tidak diperiksa dengan benar, dengan kerugian negara sekitar USD 43,6 juta.</p>
+        <div class="n-src"><a href="https://www.suara.com/news/2026/11/12/215626/polri-sita-44-aset-kasus-korupsi-lpei-enam-orang-telah-jadi-tersangka" target="_blank" rel="noopener">Suara.com ↗</a><a href="https://www.antaranews.com/berita/5850251/polri-sita-44-aset-senilai-rp286-miliar-terkait-korupsi-lpei" target="_blank" rel="noopener">ANTARA ↗</a></div>
+      </article>
+
+      <article class="news-item card">
+        <div class="n-meta"><span class="chip org">KPK</span><span class="chip st-sidik">Penyidikan</span><span class="n-date">12 Nov 2026</span></div>
+        <h3>Kasus Bea Cukai melebar ke cukai rokok dan dana operasional</h3>
+        <div class="n-fig"><b>Feb 2026</b><span>Berawal dari OTT di Ditjen Bea Cukai, kini terus dikembangkan</span></div>
+        <p>KPK mulai memanggil saksi untuk dugaan kerugian negara di sektor cukai, termasuk cukai PT Djarum, serta menelusuri pengelolaan dana operasional Direktorat P2.</p>
+        <div class="n-src"><a href="https://www.antaranews.com/berita/5848991/kpk-mulai-panggil-saksi-kasus-dugaan-korupsi-terkait-cukai-pt-djarum" target="_blank" rel="noopener">ANTARA ↗</a><a href="https://www.inilah.com/kasus-korupsi-bea-cukai-melebar-kpk-kini-usut-dana-operasional-direktorat-p2" target="_blank" rel="noopener">Inilah.com ↗</a></div>
+      </article>
+    </div>
+
+    <p class="disclaim">Asas praduga tak bersalah: tersangka dan terdakwa belum tentu bersalah sampai ada putusan pengadilan yang berkekuatan hukum tetap. Ringkasan ini ditulis ulang dari pemberitaan media. Baca sumber aslinya untuk detail lengkap.</p>
+  </div>
+</section>
+
+<section id="karhutla" class="haze-sec">
+  <div class="wrap">
+    <div class="news-head">
+      <div class="sec-head">
+        <div class="sec-no">Di tengah kabut asap</div>
+        <h2>Kata pejabat daerah soal karhutla</h2>
+        <p>Saat warga Kalimantan berjuang dengan asap dan ISPA sepanjang Agustus sampai Oktober 2026, beberapa pernyataan gubernur justru ramai dibicarakan. Ini catatannya, lengkap dengan konteks dan klarifikasi.</p>
+      </div>
+      <div class="updated mono">Diperbarui 12 Nov 2026</div>
+    </div>
+
+    <div class="quotes">
+      <article class="q-card card">
+        <div class="q-visual"><span class="tagd mono">Okt 2026</span><a class="photo-link" href="https://www.rctiplus.com/news/detail/inews/5494963/gubernur-kalteng-ngomong--bercerai-kita-kawin-lagi---dpr--pejabat-harus-punya-empati-" target="_blank" rel="noopener">Foto di sumber ↗</a><span class="prov">Kalteng</span></div>
+        <div class="q-body">
+          <div class="q-who"><b>Agustiar Sabran</b><span>Gubernur Kalimantan Tengah</span></div>
+          <p class="q-said">Bersatu kita teguh, bercerai kita kawin lagi.<small>Plesetan peribahasa saat membahas penanganan karhutla</small></p>
+          <p class="q-ctx">Dalam video yang sama ia menyebut hampir 97% karhutla dipicu ulah manusia. <b>Respons:</b> anggota Komisi II DPR Ahmad Irawan mengingatkan pejabat agar berkomunikasi dengan empati kepada warga terdampak.</p>
+          <div class="q-src"><a href="https://www.rctiplus.com/news/detail/inews/5494963/gubernur-kalteng-ngomong--bercerai-kita-kawin-lagi---dpr--pejabat-harus-punya-empati-" target="_blank" rel="noopener">iNews ↗</a><a href="https://news.fin.co.id/2026/10/15/candaan-gubernur-kalteng-saat-karhutla-viral-dpr-ingatkan-pejabat-harus-jaga-empati" target="_blank" rel="noopener">FIN ↗</a></div>
+        </div>
+      </article>
+
+      <article class="q-card card">
+        <div class="q-visual"><span class="tagd mono">3 Sep 2026</span><a class="photo-link" href="https://www.rctiplus.com/news/detail/nasional/5466180/viral--gubernur-kalbar-bentak-mahasiswa-saat-dialog-dengan-mahasiswa-soal-karhutla" target="_blank" rel="noopener">Foto di sumber ↗</a><span class="prov">Kalbar</span></div>
+        <div class="q-body">
+          <div class="q-who"><b>Ria Norsan</b><span>Gubernur Kalimantan Barat</span></div>
+          <p class="q-said">Mahasiswa ada turun? Memadamkan api?<small>Kepada mahasiswa yang memprotes penanganan karhutla</small></p>
+          <p class="q-ctx">Terjadi di Bundaran Bandara Supadio, Kubu Raya. Mahasiswa menuntut karhutla ditetapkan sebagai bencana nasional, lalu dialog berubah jadi adu argumen dan videonya viral.</p>
+          <div class="q-src"><a href="https://www.rctiplus.com/news/detail/nasional/5466180/viral--gubernur-kalbar-bentak-mahasiswa-saat-dialog-dengan-mahasiswa-soal-karhutla" target="_blank" rel="noopener">iNews ↗</a><a href="https://suarausu.or.id/karhutla-di-kalimantan-ketika-pernyataan-pejabat-dipertanyakan-masyarakat/" target="_blank" rel="noopener">Suara USU ↗</a></div>
+        </div>
+      </article>
+
+      <article class="q-card card">
+        <div class="q-visual"><span class="tagd mono">Sep–Okt 2026</span><a class="photo-link" href="https://www.rctiplus.com/news/detail/inews/5493443/foto-gubernur-kaltim-rudy-mas-ud-di-singapura-viral-di-tengah-karhutla--pemprov-buka-suara" target="_blank" rel="noopener">Foto di sumber ↗</a><span class="prov">Kaltim</span></div>
+        <div class="q-body">
+          <div class="q-who"><b>Rudy Mas'ud</b><span>Gubernur Kalimantan Timur</span></div>
+          <p class="q-said para">Kualitas udara disebut masih aman dan terkendali.<small>Ringkasan pernyataan di Gedung DPR, 15 September 2026</small></p>
+          <p class="q-ctx">Pada Oktober, fotonya sarapan di Marina Bay Sands, Singapura, viral saat asap masih menyelimuti Kaltim. <b>Klarifikasi:</b> Pemprov menyebut ia menjalani cek kesehatan di RS Mount Elizabeth dengan izin lisan Mendagri.</p>
+          <div class="q-src"><a href="https://www.rctiplus.com/news/detail/inews/5493443/foto-gubernur-kaltim-rudy-mas-ud-di-singapura-viral-di-tengah-karhutla--pemprov-buka-suara" target="_blank" rel="noopener">iNews ↗</a><a href="https://www.goodnewsfromindonesia.id/indonesiana/nasional/karhutla-belum-usai-dosen-upnvj-soroti-pentingnya-komunikasi-pemerintah-yang-akurat-dan-terbuka" target="_blank" rel="noopener">GNFI ↗</a><a href="https://scmp.com/week-asia/politics/article/3371110/indonesian-governors-singapore-trip-adds-fury-forest-fire-haze-crisis" target="_blank" rel="noopener">SCMP ↗</a></div>
+        </div>
+      </article>
+
+      <article class="q-card card">
+        <div class="q-visual"><span class="tagd mono">22 Agu 2026</span><a class="photo-link" href="https://indopolitika.com/mengapa-pejabat-mengatakan-karhutla-tidak-separah-di-media-sosial/" target="_blank" rel="noopener">Foto di sumber ↗</a><span class="prov">Kalsel</span></div>
+        <div class="q-body">
+          <div class="q-who"><b>Muhidin</b><span>Gubernur Kalimantan Selatan</span></div>
+          <p class="q-said para">Kebakaran disebut tidak separah di media sosial, dan asap akan berlalu terbawa angin laut.<small>Ringkasan pernyataan bersama KSAL saat meninjau Banjarbaru</small></p>
+          <p class="q-ctx">Peneliti menilai pernyataan semacam ini berisiko mengurangi urgensi, karena kebakaran gambut bisa berlangsung lama. <b>Belakangan:</b> ia mengakui keterbatasan personel dan armada pemadam, lalu meminta maaf.</p>
+          <div class="q-src"><a href="https://theconversation.com/4-taktik-negara-menyebarkan-disinformasi-iklim-analisis-isu-sawit-hingga-karhutla-di-media-sosial-295456" target="_blank" rel="noopener">The Conversation ↗</a><a href="https://www.metrotvnews.com/read/N9nCdERg-editorial-mi-pemimpin-daerah-defisit-empati" target="_blank" rel="noopener">Media Indonesia ↗</a></div>
+        </div>
+      </article>
+    </div>
+
+    <p class="disclaim">Kutipan bertanda petik ditulis sesuai pemberitaan. Yang tanpa kutipan langsung adalah ringkasan dari media. Foto tidak kami muat ulang karena hak ciptanya milik media dan fotografer masing-masing. Buka tautan "Foto di sumber" untuk melihatnya.</p>
+  </div>
+</section>
+
+<section id="mulai">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Bagian 01</div>
+      <h2>Sejauh mana kamu paham soal korupsi?</h2>
+        <p>Pilih titik mulai yang paling cocok. Semua jalur ujungnya sama: kamu tahu kapan sesuatu termasuk korupsi dan harus ngapain.</p>
+    </div>
+    <div class="levels">
+      <a class="level card" href="#jenis">
+        <span class="tab">Level 1</span>
+        <svg class="glyph" viewBox="0 0 54 54" aria-hidden="true"><rect x="6" y="10" width="42" height="34" fill="none" stroke="currentColor" stroke-width="3"/><path d="M6 18h42" stroke="currentColor" stroke-width="3"/><text x="27" y="38" text-anchor="middle" font-family="Big Shoulders Display, sans-serif" font-weight="900" font-size="18" fill="currentColor">?</text></svg>
+        <h3>Masih awam banget</h3>
+        <p>Mulai dari 7 kelompok korupsi menurut undang-undang, lengkap dengan contoh sehari-hari.</p>
+        <span class="go">Kenalan sama 7 jenisnya <span class="arrow">→</span></span>
+      </a>
+      <a class="level card" href="#lapor">
+        <span class="tab">Level 2</span>
+        <svg class="glyph" viewBox="0 0 54 54" aria-hidden="true"><path d="M10 44V10h22l12 12v22z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 10v12h12M17 30h20M17 37h14" stroke="currentColor" stroke-width="3"/></svg>
+        <h3>Udah lumayan paham</h3>
+        <p>Pelajari cara menyusun laporan yang bisa ditindaklanjuti, plus kanal resmi untuk melapor.</p>
+        <span class="go">Lihat langkah melapor <span class="arrow">→</span></span>
+      </a>
+      <a class="level alt card" href="#simulasi">
+        <span class="tab">Simulasi</span>
+        <svg class="glyph" viewBox="0 0 54 54" aria-hidden="true"><rect x="8" y="16" width="38" height="24" fill="none" stroke="currentColor" stroke-width="3"/><path d="M8 16l19 14 19-14" fill="none" stroke="currentColor" stroke-width="3"/></svg>
+        <h3>Kamu ditawari amplop</h3>
+        <p>Coba hadapi situasi nyata: pungli, uang pelicin, dan parsel dari rekanan. Apa pilihanmu?</p>
+        <span class="go">Cobain simulasinya <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="jenis" class="tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Bagian 02</div>
+      <h2>7 kelompok korupsi yang perlu kamu kenali</h2>
+        <p>UU Tipikor (UU 31/1999 jo. UU 20/2001) merumuskan 30 bentuk tindak pidana korupsi. Semuanya bisa diringkas jadi 7 kelompok ini.</p>
+    </div>
+    <div class="types" id="types"></div>
+    <p class="note">Catatan hukum: sejak KUHP baru (UU 1/2023) berlaku pada 2 Januari 2026, beberapa pasal UU Tipikor seperti Pasal 2 ayat (1), 3, 5, 11, dan 13 dicabut dan rumusannya kini diatur di dalam KUHP. Rujukan pasal di atas memakai penomoran UU Tipikor yang paling dikenal publik. Konten ini bersifat edukasi, bukan nasihat hukum.</p>
+  </div>
+</section>
+
+<section id="lapor">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Bagian 03</div>
+      <h2>Nemu indikasi korupsi? Ikuti langkah ini</h2>
+        <p>Laporan yang jelas lebih mungkin ditindaklanjuti. Banyak aduan dikembalikan karena datanya tidak lengkap.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <div class="step-n">01</div>
+        <div>
+          <h3>Susun kronologi dengan rumus 5W+1H</h3>
+          <p>Tulis siapa yang terlibat, melakukan apa, kapan, di mana, mengapa, dan bagaimana caranya. Fakta saja, hindari opini.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">02</div>
+        <div>
+          <h3>Simpan bukti awal</h3>
+          <p>Dokumen, foto, kuitansi, tangkapan layar percakapan, atau nama saksi. Jangan menyebarkannya ke media sosial dulu, supaya pelaku tidak sempat menghilangkan jejak.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">03</div>
+        <div>
+          <h3>Pilih kanal pengaduan resmi KPK</h3>
+          <p>Kamu bisa melapor lewat salah satu kanal berikut.</p>
+          <div class="channels">
+            <div class="ch card"><b>kws.kpk.go.id</b><span>KPK Whistleblower's System, bisa anonim</span><button class="copy" data-copy="https://kws.kpk.go.id">Salin</button></div>
+            <div class="ch card"><b>198</b><span>Call center KPK</span><button class="copy" data-copy="198">Salin</button></div>
+            <div class="ch card"><b>0811-959-575</b><span>WhatsApp pengaduan</span><button class="copy" data-copy="0811959575">Salin</button></div>
+            <div class="ch card"><b>pengaduan@kpk.go.id</b><span>Email pengaduan</span><button class="copy" data-copy="pengaduan@kpk.go.id">Salin</button></div>
+          </div>
+          <a class="btn" href="https://kws.kpk.go.id" target="_blank" rel="noopener">Buka KWS <span class="arrow">↗</span></a>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">04</div>
+        <div>
+          <h3>Lindungi identitasmu</h3>
+          <p>Lewat KWS kamu bisa memilih untuk tidak menampilkan identitas. Kalau butuh perlindungan sebagai saksi atau pelapor, ada LPSK (Lembaga Perlindungan Saksi dan Korban).</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">05</div>
+        <div>
+          <h3>Pantau tindak lanjutnya</h3>
+          <p>Setiap aduan diverifikasi dan ditelaah dulu, apakah masuk ranah KPK. Simpan nomor registrasi laporanmu untuk memantau statusnya.</p>
+        </div>
+      </li>
+      <li class="step">
+        <div class="step-n">06</div>
+        <div>
+          <h3>Kamu pegawai negeri dan menerima hadiah?</h3>
+          <p>Itu bisa termasuk gratifikasi. Laporkan ke KPK paling lambat 30 hari kerja sejak diterima, supaya tidak dianggap suap.</p>
+          <a class="btn ghost" href="https://gol.kpk.go.id" target="_blank" rel="noopener">Lapor gratifikasi <span class="arrow">↗</span></a>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="lembaga" class="tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Bagian 04</div>
+      <h2>Siapa saja yang memberantas korupsi?</h2>
+        <p>Pemberantasan korupsi bukan cuma tugas KPK. Kenali peran tiap lembaga supaya kamu tahu ke mana harus bertanya.</p>
+    </div>
+    <div class="insts">
+      <div class="inst card"><div class="ab">KPK</div><h3>Komisi Pemberantasan Korupsi</h3><p>Menyelidiki, menyidik, dan menuntut perkara korupsi, sekaligus menjalankan pencegahan seperti LHKPN dan pengendalian gratifikasi.</p></div>
+      <div class="inst card"><div class="ab">AGO</div><h3>Kejaksaan</h3><p>Menyidik perkara korupsi tertentu dan menuntut terdakwa di persidangan, termasuk perkara hasil penyidikan kepolisian.</p></div>
+      <div class="inst card"><div class="ab">POL</div><h3>Kepolisian (Polri)</h3><p>Menyelidiki dan menyidik dugaan tindak pidana korupsi, lalu menyerahkan berkasnya ke kejaksaan.</p></div>
+      <div class="inst card"><div class="ab">TPK</div><h3>Pengadilan Tipikor</h3><p>Mengadili perkara korupsi. Putusan yang sudah berkekuatan hukum tetap (inkracht) menjadi dasar seseorang disebut terpidana.</p></div>
+      <div class="inst card"><div class="ab">AUD</div><h3>BPK &amp; BPKP</h3><p>Mengaudit pengelolaan keuangan negara dan sering diminta menghitung besar kerugian negara dalam suatu perkara.</p></div>
+      <div class="inst card"><div class="ab">FIU</div><h3>PPATK</h3><p>Menganalisis transaksi keuangan mencurigakan, yang kerap jadi pintu masuk pengungkapan korupsi dan pencucian uang.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="simulasi">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Bagian 05</div>
+      <h2>Simulasi: kamu ada di posisi ini</h2>
+        <p>Tiga situasi yang sering terjadi. Pilih responsmu, lalu lihat penjelasannya.</p>
+    </div>
+    <div class="sim">
+      <div class="scene">
+        <div class="mono" id="sim-label">Situasi 1 dari 3</div>
+        <p class="q" id="sim-q"></p>
+        <div class="choices" id="sim-choices"></div>
+      </div>
+      <div class="verdict card" aria-live="polite">
+        <div class="mono" style="color:var(--muted)">Hasil</div>
+        <div class="res" id="sim-res">Pilih salah satu</div>
+        <p id="sim-exp" style="color:var(--muted)">Penjelasan muncul di sini setelah kamu memilih.</p>
+        <div class="sim-nav">
+          <button class="btn" id="sim-next" type="button">Situasi berikutnya <span class="arrow">→</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quiz" class="tint">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Bagian 06</div>
+      <h2>Quiz: udah siap jadi warga antikorupsi?</h2>
+        <p>Lima pertanyaan singkat dari materi di halaman ini.</p>
+    </div>
+    <div class="quiz card" id="quiz-box">
+      <div class="quiz-top mono"><span id="qz-count">Pertanyaan 1 / 5</span><span id="qz-score">Skor 0</span></div>
+      <div class="progress"><i id="qz-bar"></i></div>
+      <h3 id="qz-q"></h3>
+      <div class="opts" id="qz-opts"></div>
+      <p class="explain" id="qz-exp" aria-live="polite"></p>
+      <div class="quiz-foot"><button class="btn" id="qz-next" type="button" disabled>Lanjut <span class="arrow">→</span></button></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="wrap">
+    <span class="mono">Hari Antikorupsi Sedunia · 9 Desember 2026</span>
+    <h2>Sudah paham?<br>Saatnya <span class="hl">berani melapor.</span></h2>
+    <div class="countdown" id="countdown" aria-label="Hitung mundur ke Hari Antikorupsi Sedunia">
+      <div class="cd"><b id="cd-d">00</b><span>Hari</span></div>
+      <div class="cd"><b id="cd-h">00</b><span>Jam</span></div>
+      <div class="cd"><b id="cd-m">00</b><span>Menit</span></div>
+      <div class="cd"><b id="cd-s">00</b><span>Detik</span></div>
+    </div>
+    <p>Korupsi tumbuh subur ketika orang memilih diam. Satu laporan yang lengkap bisa jadi awal sebuah perkara.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-no">Selanjutnya</div>
+      <h2>Kepoin yang lain</h2>
+    </div>
+    <div class="explore">
+      <a class="ex card" href="#">
+        <span class="stamp soon">Segera</span>
+        <span class="mono">Database</span>
+        <h3>Daftar Terpidana Korupsi</h3>
+        <p>Hanya dari putusan pengadilan yang sudah inkracht, dengan nomor perkara dan tautan ke direktori putusan.</p>
+        <span class="go">Pantau rilisnya <span class="arrow">→</span></span>
+      </a>
+      <a class="ex card" href="https://elhkpn.kpk.go.id" target="_blank" rel="noopener">
+        <span class="mono">Transparansi</span>
+        <h3>Cek Harta Pejabat (LHKPN)</h3>
+        <p>Lihat pengumuman laporan harta kekayaan penyelenggara negara di situs resmi KPK.</p>
+        <span class="go">Buka e-LHKPN <span class="arrow">↗</span></span>
+      </a>
+      <a class="ex card" href="https://aclc.kpk.go.id" target="_blank" rel="noopener">
+        <span class="mono">Belajar lagi</span>
+        <h3>Kelas Antikorupsi</h3>
+        <p>Portal pembelajaran antikorupsi KPK, berisi artikel, modul, dan kursus daring.</p>
+        <span class="go">Buka ACLC <span class="arrow">↗</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <h4>Tentang</h4>
+        <p>WebSite Koruptor adalah inisiatif edukasi publik yang independen dan tidak berafiliasi dengan partai, kandidat, maupun lembaga penegak hukum mana pun.</p>
+        <p style="margin-top:10px">Kebijakan data: kami hanya menampilkan nama terpidana berdasarkan putusan berkekuatan hukum tetap, dan setiap entri mencantumkan sumbernya.</p>
+      </div>
+      <div>
+        <h4>Jelajahi</h4>
+        <ul>
+          <li><a href="#jenis">Jenis korupsi</a></li>
+          <li><a href="#lapor">Cara melapor</a></li>
+          <li><a href="#lembaga">Lembaga</a></li>
+          <li><a href="#quiz">Quiz</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Sumber rujukan</h4>
+        <ul>
+          <li><a href="https://www.kpk.go.id" target="_blank" rel="noopener">kpk.go.id</a></li>
+          <li><a href="https://putusan3.mahkamahagung.go.id" target="_blank" rel="noopener">Direktori Putusan MA</a></li>
+          <li><a href="https://ti.or.id" target="_blank" rel="noopener">Transparency International Indonesia</a></li>
+          <li><a href="https://peraturan.bpk.go.id/Details/44900/uuno-20-tahun-2001" target="_blank" rel="noopener">UU 20/2001 (JDIH BPK)</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="big-foot" aria-hidden="true">Kenali. Tolak. Lapor.</div>
+    <p class="mono copyright">© 2026 WebSite Koruptor</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+  var REDUCE = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var EASE = "cubic-bezier(.22,1,.36,1)";
+  function anim(el, frames, opts){ if(REDUCE || !el.animate) return null; return el.animate(frames, opts); }
+  function enter(els){
+    els.forEach(function(el, i){ anim(el, [{opacity:0, transform:"translateY(10px)"},{opacity:1, transform:"none"}], {duration:420, delay:i*60, easing:EASE, fill:"backwards"}); });
+  }
+  function swap(els, update){
+    if(REDUCE || !els[0].animate){ update(); return; }
+    var outs = els.map(function(el){ return el.animate([{opacity:1, transform:"none"},{opacity:0, transform:"translateY(-8px)"}], {duration:180, easing:"ease-in", fill:"forwards"}); });
+    outs[0].onfinish = function(){
+      update();
+      outs.forEach(function(a){ a.cancel(); });
+      enter(els);
+    };
+  }
+  /* ---------- 7 jenis korupsi ---------- */
+  var TYPES = [
+    {n:"Kerugian keuangan negara", p:"Pasal 2 & 3", d:"Memperkaya diri, orang lain, atau korporasi secara melawan hukum atau menyalahgunakan wewenang sehingga negara rugi.", c:"Mark-up anggaran proyek jalan, lalu selisihnya masuk ke kantong pejabat dan kontraktor."},
+    {n:"Suap-menyuap", p:"Pasal 5, 6, 11, 12 a–d, 13", d:"Memberi atau menjanjikan sesuatu kepada pegawai negeri, hakim, atau penyelenggara negara supaya berbuat atau tidak berbuat sesuatu dalam jabatannya.", c:"Pengusaha memberi uang ke pejabat dinas supaya izinnya keluar walau syarat belum lengkap."},
+    {n:"Penggelapan dalam jabatan", p:"Pasal 8, 9, 10", d:"Pegawai negeri menggelapkan uang atau surat berharga karena jabatannya, memalsukan buku, atau merusak barang bukti.", c:"Bendahara sekolah memakai dana BOS untuk keperluan pribadi dan memalsukan laporan pertanggungjawabannya."},
+    {n:"Pemerasan", p:"Pasal 12 e, f, g", d:"Pegawai negeri memaksa orang memberi sesuatu, membayar, atau mengerjakan sesuatu untuk dirinya dengan menyalahgunakan kekuasaan.", c:"Petugas layanan meminta 'uang administrasi' di luar tarif resmi agar dokumenmu diproses."},
+    {n:"Perbuatan curang", p:"Pasal 7, 12 h", d:"Kecurangan pemborong, pengawas proyek, atau rekanan yang membahayakan keamanan orang, barang, atau negara.", c:"Kontraktor mengurangi spesifikasi besi beton gedung sekolah, dan pengawasnya membiarkan."},
+    {n:"Benturan kepentingan dalam pengadaan", p:"Pasal 12 i", d:"Pegawai negeri ikut serta dalam pengadaan yang ia urus atau awasi, langsung maupun tidak langsung.", c:"Pejabat pengadaan memenangkan tender untuk perusahaan milik istrinya."},
+    {n:"Gratifikasi", p:"Pasal 12B jo. 12C", d:"Pemberian dalam arti luas kepada pegawai negeri yang berhubungan dengan jabatannya. Dianggap suap bila tidak dilaporkan ke KPK dalam 30 hari kerja.", c:"Pejabat menerima tiket liburan dari vendor yang sedang ikut lelang di instansinya."}
+  ];
+  var box = document.getElementById("types");
+  TYPES.forEach(function(t,i){
+    var el = document.createElement("article");
+    el.className = "type card";
+    el.innerHTML = '<div class="head"><span class="idx">0'+(i+1)+'</span><span class="pasal">'+t.p+'</span></div><h3>'+t.n+'</h3><p>'+t.d+'</p><details><summary>Contoh kasus</summary><div class="body"><p>'+t.c+'</p></div></details>';
+    box.appendChild(el);
+  });
+  var sum = document.createElement("div");
+  sum.className = "type card sum";
+  sum.innerHTML = '<div class="big">30 → 7</div><p>30 bentuk tindak pidana korupsi dalam UU Tipikor, diringkas jadi 7 kelompok supaya mudah diingat.</p>';
+  box.appendChild(sum);
+
+  /* ---------- copy buttons ---------- */
+  var toast = document.getElementById("toast"), tt;
+  function showToast(msg){ toast.textContent = msg; toast.classList.add("show"); clearTimeout(tt); tt = setTimeout(function(){toast.classList.remove("show")},1800); }
+  document.querySelectorAll(".copy").forEach(function(b){
+    b.addEventListener("click", function(){
+      var v = b.getAttribute("data-copy");
+      try{
+        navigator.clipboard.writeText(v).then(function(){showToast("Disalin: "+v)}, function(){showToast(v)});
+      }catch(e){ showToast(v); }
+    });
+  });
+
+  /* ---------- simulasi ---------- */
+  var SIM = [
+    {q:"Kamu mengurus surat izin usaha di kantor kelurahan. Petugas bilang: \"Kalau mau cepat, tambah Rp300 ribu ya, biar besok jadi.\" Tarif resminya gratis.",
+     o:[
+      {t:"Bayar saja, yang penting cepat beres.", ok:false, e:"Membayar pungli ikut menyuburkan praktik pemerasan. Permintaan petugas itu bisa masuk kategori pemerasan oleh pegawai negeri."},
+      {t:"Tolak dengan sopan, minta prosedur resmi, catat nama petugas, waktu, dan lokasi, lalu laporkan.", ok:true, e:"Tepat. Catatan 5W+1H membuat laporanmu bisa ditindaklanjuti, misalnya lewat kws.kpk.go.id atau kanal pengaduan pemda setempat."},
+      {t:"Tawar jadi Rp100 ribu.", ok:false, e:"Menawar tetap berarti memberi. Besar kecilnya nominal tidak mengubah sifat perbuatannya."}
+     ]},
+    {q:"Kamu ASN di bagian pengadaan. Menjelang Lebaran, vendor yang sedang ikut tender mengirim parsel berisi voucher belanja Rp2 juta ke rumahmu.",
+     o:[
+      {t:"Terima saja, kan cuma THR dan semua orang juga dapat.", ok:false, e:"Pemberian yang berhubungan dengan jabatan termasuk gratifikasi. Kalau tidak dilaporkan, ia dianggap suap."},
+      {t:"Tolak. Kalau terlanjur diterima, laporkan ke KPK paling lambat 30 hari kerja.", ok:true, e:"Benar. Pelaporan gratifikasi bisa dilakukan lewat gol.kpk.go.id atau Unit Pengendalian Gratifikasi di instansimu."},
+      {t:"Terima, lalu bagikan ke rekan satu tim.", ok:false, e:"Membagikannya tidak menghapus kewajiban lapor. Kamu tetap penerima gratifikasi."}
+     ]},
+    {q:"Di grup WhatsApp kantor, kamu lihat foto dokumen yang menunjukkan harga laptop proyek dinas dua kali lipat harga pasar.",
+     o:[
+      {t:"Langsung sebar ke media sosial biar viral.", ok:false, e:"Menyebar terlalu cepat bisa membuat bukti dihilangkan, dan kamu berisiko terkena masalah hukum kalau datanya keliru."},
+      {t:"Simpan bukti, bandingkan dengan harga pasar, susun kronologi, lalu laporkan lewat kanal resmi.", ok:true, e:"Tepat. Indikasi mark-up masuk kelompok kerugian keuangan negara. Laporan dengan bukti awal jauh lebih kuat."},
+      {t:"Diam saja, bukan urusanku.", ok:false, e:"Kerugian negara adalah uang publik, termasuk pajakmu. Kamu tetap bisa melapor tanpa membuka identitas."}
+     ]}
+  ];
+  var si = 0;
+  var sq = document.getElementById("sim-q"), sc = document.getElementById("sim-choices"),
+      sl = document.getElementById("sim-label"), sr = document.getElementById("sim-res"),
+      se = document.getElementById("sim-exp"), sn = document.getElementById("sim-next");
+  function renderSim(){
+    var s = SIM[si];
+    sl.textContent = "Situasi "+(si+1)+" dari "+SIM.length;
+    sq.textContent = s.q;
+    sr.textContent = "Pilih salah satu"; sr.className = "res";
+    se.textContent = "Penjelasan muncul di sini setelah kamu memilih.";
+    sc.innerHTML = "";
+    s.o.forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "choice"; b.textContent = o.t;
+      b.addEventListener("click", function(){
+        sc.querySelectorAll(".choice").forEach(function(x){x.disabled = true});
+        b.classList.add("picked");
+        sr.textContent = o.ok ? "Langkah tepat" : "Hati-hati";
+        sr.className = "res " + (o.ok ? "good" : "bad");
+        se.textContent = o.e;
+        enter([sr, se]);
+      });
+      sc.appendChild(b);
+    });
+    sn.innerHTML = (si === SIM.length-1 ? "Ulangi dari awal" : "Situasi berikutnya") + ' <span class="arrow">→</span>';
+  }
+  sn.addEventListener("click", function(){ swap([sq, sc, sr, se], function(){ si = (si+1) % SIM.length; renderSim(); }); });
+  renderSim();
+
+  /* ---------- quiz ---------- */
+  var QZ = [
+    {q:"Berapa skor Indeks Persepsi Korupsi Indonesia tahun 2025?", o:["37","34","40","29"], a:1, e:"Skornya 34 dari 100, turun 3 poin dari 2024, dengan peringkat 109 dari 180 negara."},
+    {q:"Seorang ASN menerima hadiah dari rekanan kantor. Paling lambat kapan ia harus melaporkannya ke KPK?", o:["7 hari kalender","14 hari kerja","30 hari kerja","Tidak wajib lapor"], a:2, e:"Gratifikasi wajib dilaporkan paling lambat 30 hari kerja sejak diterima. Kalau tidak, ia dianggap suap."},
+    {q:"Apa alamat kanal pengaduan online resmi KPK?", o:["lapor.kpk.id","kws.kpk.go.id","pengaduan.go.id","kpk-lapor.com"], a:1, e:"KPK Whistleblower's System ada di kws.kpk.go.id, dan pelapor bisa memilih untuk anonim."},
+    {q:"Petugas memaksa warga membayar 'uang percepatan' di luar tarif resmi. Ini termasuk kelompok korupsi apa?", o:["Gratifikasi","Perbuatan curang","Pemerasan","Benturan kepentingan"], a:2, e:"Pegawai negeri yang memaksa orang membayar dengan menyalahgunakan kekuasaannya masuk kelompok pemerasan."},
+    {q:"Pejabat pengadaan memenangkan tender untuk perusahaan milik keluarganya sendiri. Ini termasuk?", o:["Benturan kepentingan dalam pengadaan","Penggelapan dalam jabatan","Suap-menyuap","Bukan korupsi"], a:0, e:"Ikut serta dalam pengadaan yang ia urus sendiri adalah benturan kepentingan dalam pengadaan (Pasal 12 huruf i)."}
+  ];
+  var qi = 0, score = 0;
+  var qq = document.getElementById("qz-q"), qo = document.getElementById("qz-opts"), qe = document.getElementById("qz-exp"),
+      qn = document.getElementById("qz-next"), qc = document.getElementById("qz-count"), qs = document.getElementById("qz-score"),
+      qb = document.getElementById("qz-bar");
+  function renderQ(){
+    var it = QZ[qi];
+    qc.textContent = "Pertanyaan "+(qi+1)+" / "+QZ.length;
+    qs.textContent = "Skor "+score;
+    qb.style.width = (qi/QZ.length*100)+"%";
+    qq.textContent = it.q; qe.textContent = ""; qn.disabled = true;
+    qn.innerHTML = (qi === QZ.length-1 ? "Lihat hasil" : "Lanjut") + ' <span class="arrow">→</span>';
+    qo.innerHTML = "";
+    it.o.forEach(function(t,idx){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt"; b.textContent = t;
+      b.addEventListener("click", function(){
+        var all = qo.querySelectorAll(".opt");
+        all.forEach(function(x){x.disabled = true});
+        all[it.a].classList.add("right");
+        if(idx === it.a){ score++; qe.textContent = "Benar. "+it.e; }
+        else { b.classList.add("wrong"); qe.textContent = "Belum tepat. "+it.e; }
+        qs.textContent = "Skor "+score;
+        qn.disabled = false;
+        enter([qe]);
+      });
+      qo.appendChild(b);
+    });
+  }
+  function renderResult(){
+    qb.style.width = "100%";
+    qc.textContent = "Selesai";
+    var msg = score === QZ.length ? "Sempurna. Kamu siap jadi pelapor yang andal." :
+              score >= 3 ? "Bagus. Ulas lagi bagian yang masih keliru." :
+              "Coba baca lagi bagian 7 jenis korupsi dan cara lapor, lalu ulangi.";
+    qq.textContent = "Skor kamu "+score+" dari "+QZ.length+".";
+    qo.innerHTML = ""; qe.textContent = msg;
+    qn.disabled = false; qn.innerHTML = 'Ulangi quiz <span class="arrow">↺</span>';
+  }
+  qn.addEventListener("click", function(){
+    swap([qq, qo, qe], function(){
+      if(qc.textContent === "Selesai"){ qi = 0; score = 0; renderQ(); return; }
+      if(qi < QZ.length-1){ qi++; renderQ(); } else { renderResult(); }
+    });
+  });
+  renderQ();
+
+  /* ---------- countdown ke 9 Des 2026 00:00 WIB ---------- */
+  var target = Date.parse("2026-12-09T00:00:00+07:00");
+  var d=document.getElementById("cd-d"),h=document.getElementById("cd-h"),m=document.getElementById("cd-m"),s=document.getElementById("cd-s");
+  function pad(n){return (n<10?"0":"")+n}
+  function tick(){
+    var diff = Math.max(0, target - Date.now());
+    var sec = Math.floor(diff/1000);
+    d.textContent = pad(Math.floor(sec/86400));
+    h.textContent = pad(Math.floor(sec%86400/3600));
+    m.textContent = pad(Math.floor(sec%3600/60));
+    s.textContent = pad(sec%60);
+  }
+  tick(); setInterval(tick,1000);
+  /* ---------- smooth scroll dengan easing ---------- */
+  var nav = document.querySelector("nav.top");
+  function easeInOutCubic(t){ return t<.5 ? 4*t*t*t : 1-Math.pow(-2*t+2,3)/2; }
+  function scrollToY(y){
+    if(REDUCE){ window.scrollTo(0,y); return; }
+    var start = window.pageYOffset, dist = y - start;
+    var dur = Math.min(1100, Math.max(450, Math.abs(dist)*0.35));
+    var t0 = null;
+    function step(ts){
+      if(t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0)/dur);
+      window.scrollTo(0, start + dist*easeInOutCubic(p));
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var id = a.getAttribute("href");
+      if(id.length < 2) return;
+      var target = document.querySelector(id);
+      if(!target) return;
+      e.preventDefault();
+      var y = target.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.offsetHeight : 0) + 1;
+      scrollToY(id === "#top" ? 0 : y);
+      try{ history.replaceState(null, "", id); }catch(err){}
+    });
+  });
+
+  /* ---------- nav: bayangan saat scroll + penanda bagian aktif ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll("nav.top a.nl"));
+  var spySections = links.map(function(l){ return document.querySelector(l.getAttribute("href")); });
+  var ticking = false;
+  function onScroll(){
+    ticking = false;
+    var y = window.pageYOffset;
+    nav.classList.toggle("scrolled", y > 8);
+    var mark = y + (nav ? nav.offsetHeight : 0) + window.innerHeight*0.3;
+    var current = 0;
+    spySections.forEach(function(sec, i){ if(sec && sec.offsetTop <= mark) current = i; });
+    links.forEach(function(l, i){ l.classList.toggle("active", i === current); });
+  }
+  window.addEventListener("scroll", function(){ if(!ticking){ ticking = true; requestAnimationFrame(onScroll); } }, {passive:true});
+  onScroll();
+
+  /* ---------- buka-tutup "Contoh kasus" dengan animasi tinggi ---------- */
+  document.querySelectorAll(".type details").forEach(function(d){
+    var sum = d.querySelector("summary"), body = d.querySelector(".body");
+    sum.addEventListener("click", function(e){
+      if(REDUCE || !body.animate) return;
+      e.preventDefault();
+      if(d.open){
+        var h = body.offsetHeight;
+        var a = body.animate([{height:h+"px", opacity:1},{height:"0px", opacity:0}], {duration:300, easing:EASE});
+        a.onfinish = function(){ d.open = false; };
+      } else {
+        d.open = true;
+        var h2 = body.offsetHeight;
+        body.animate([{height:"0px", opacity:0},{height:h2+"px", opacity:1}], {duration:380, easing:EASE});
+      }
+    });
+  });
+
+  /* ---------- konten muncul halus saat di-scroll ---------- */
+  if(!REDUCE){
+    var pending = [];
+    var vh0 = window.innerHeight;
+    document.querySelectorAll(".sec-head, .news > *, .quotes > *, .levels > *, .types > *, .steps > *, .insts > *, .sim > *, .quiz, .countdown, .explore > *, .foot > *").forEach(function(el){
+      if(el.getBoundingClientRect().top < vh0) return; // yang sudah terlihat tidak disembunyikan
+      var i = el.parentElement ? Array.prototype.indexOf.call(el.parentElement.children, el) : 0;
+      el.style.setProperty("--d", (Math.min(i, 5)*0.07)+"s");
+      el.classList.add("pre");
+      pending.push(el);
+    });
+    function reveal(){
+      if(!pending.length) return;
+      var limit = window.innerHeight*0.92;
+      pending = pending.filter(function(el){
+        if(el.getBoundingClientRect().top < limit){
+          el.classList.add("in"); el.classList.remove("pre");
+          setTimeout(function(){ el.classList.remove("in"); el.style.removeProperty("--d"); }, 1500);
+          return false;
+        }
+        return true;
+      });
+    }
+    var rTick = false;
+    window.addEventListener("scroll", function(){ if(!rTick){ rTick = true; requestAnimationFrame(function(){ rTick = false; reveal(); }); } }, {passive:true});
+    window.addEventListener("resize", reveal);
+    reveal();
+  }
+})();
+</script>
+</body>
+</html>
