@@ -74,8 +74,8 @@ header.hero{padding:72px 0 64px}
 .hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(300px,1fr);gap:56px;align-items:center}
 .file-meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);margin-bottom:20px}
 .hero h1{font-size:var(--fs-h1);line-height:.84;letter-spacing:-.005em}
-.hero h1 .num{display:inline-block;position:relative;color:var(--on-marker);padding:0 .08em;isolation:isolate}
-.hero h1 .num::before{content:"";position:absolute;inset:.1em -.02em .04em;background:var(--marker);z-index:-1;transform-origin:left;animation:swipe .8s .2s cubic-bezier(.6,.1,.2,1) both}
+.hero h1 .num{display:inline-block;position:relative;color:var(--on-marker);padding:0 .14em;letter-spacing:.05em;isolation:isolate}
+.hero h1 .num::before{content:"";position:absolute;inset:.06em 0 .02em;background:var(--marker);z-index:-1;transform-origin:left;animation:swipe .8s .2s cubic-bezier(.6,.1,.2,1) both}
 @keyframes swipe{from{transform:scaleX(.04)}to{transform:scaleX(1)}}
 .hero .lede{font-size:var(--fs-lg);max-width:36ch;margin-top:24px;color:var(--muted)}
 .hero .lede b{color:var(--ink);font-weight:600}
